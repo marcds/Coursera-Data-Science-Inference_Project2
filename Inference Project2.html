@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Statistical Inference Assigment 2</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h2>Statistical Inference Assigment 2</h2>
+
+<p>This is a basic statistical inference data analysis. In this report, we are going to analyze the ToothGrowth data in the R datasets package.</p>
+
+<h3>1 - Loading the required packages and ToothGrowth data</h3>
+
+<pre><code class="r">library(ggplot2)
+library(datasets)
+library(knitr)
+library(grid)
+library(gridExtra)
+data(ToothGrowth)
+str(ToothGrowth)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    60 obs. of  3 variables:
+##  $ len : num  4.2 11.5 7.3 5.8 6.4 10 11.2 11.2 5.2 7 ...
+##  $ supp: Factor w/ 2 levels &quot;OJ&quot;,&quot;VC&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ dose: num  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 ...
+</code></pre>
+
+<pre><code class="r">levels(ToothGrowth$supp) &lt;- c(&quot;Orange Juice&quot;, &quot;Ascorbic Acid&quot;)
+head(ToothGrowth)
+</code></pre>
+
+<pre><code>##    len          supp dose
+## 1  4.2 Ascorbic Acid  0.5
+## 2 11.5 Ascorbic Acid  0.5
+## 3  7.3 Ascorbic Acid  0.5
+## 4  5.8 Ascorbic Acid  0.5
+## 5  6.4 Ascorbic Acid  0.5
+## 6 10.0 Ascorbic Acid  0.5
+</code></pre>
+
+<h3>1.1 - Performing some basic exploratory data analysis</h3>
+
+<pre><code class="r">method_plot &lt;- ggplot(aes(x = supp, y = len), data = ToothGrowth) + geom_boxplot(aes(fill = supp)) + 
+                    scale_x_discrete(&quot;Supplement method&quot;) +   
+                    scale_y_continuous(&quot;Teeth length&quot;) +  
+                    ggtitle(&quot;Tooth Growth Analysis&quot;)
+
+method_plot
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-2"/> </p>
+
+<p>This chart shows that OJ achieves an higher median tooth length overall compared to ascorbic acid. In addition the value of Q1 for OJ is almost as much as Q2 of ascorbic acid and OJ median is the same as the third quartile of the other administration method. Finally, when looking at the confidence intervals, OJ shows narrower upper and lower intervals.</p>
+
+<pre><code class="r">dose_plot &lt;- ggplot(ToothGrowth,
+                aes(x = factor(dose), y = len, fill = factor(dose)))
+
+dose_plot + geom_boxplot(notch = F) + facet_grid(.~supp) +
+                scale_x_discrete(&quot;Dosage (mg)&quot;) +
+                scale_y_continuous(&quot;Tooth lenght&quot;) +
+                ggtitle(&quot;Tooth Growth Analysis&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-3"/> </p>
+
+<p>These charts show that an increasing dosage of both orange juice and ascorbic acid delivery method is conductive to tooth growth in guinea pigs.
+Nonetheless, exploring the different dosage level in more details we observe a different impact of the delivery method on tooth growth. </p>
+
+<p>At the 0.5 mg dosage level OJ achieves a better growth as we can see from the lowest CI above the median of the other method.
+This is also the case for the 1mg dose level. Although, the OJ delivery shows a wide lower CI the median is much higher than that of the ascorbic acid.  </p>
+
+<p>Finally, at the 2mg dose level, we observe that the tooth growht pattern has not continued - i.e. both OJ and ascorbic acid have similar values - although the VC has mich wider IQRs and confidence intervals than OJ.</p>
+
+<h3>B - Analyzing the data further providing a basic summary of the data.</h3>
+
+<pre><code class="r">ToothGrowth$dose &lt;- as.factor(ToothGrowth$dose)
+summary(ToothGrowth)
+</code></pre>
+
+<pre><code>##       len                   supp     dose   
+##  Min.   : 4.20   Orange Juice :30   0.5:20  
+##  1st Qu.:13.07   Ascorbic Acid:30   1  :20  
+##  Median :19.25                      2  :20  
+##  Mean   :18.81                              
+##  3rd Qu.:25.27                              
+##  Max.   :33.90
+</code></pre>
+
+<p>The tooth length ranges from a minimum of 4.2 to a maximum of 33.9 with a mean value of 19.25.</p>
+
+<pre><code class="r">table(ToothGrowth$supp, ToothGrowth$dose)
+</code></pre>
+
+<pre><code>##                
+##                 0.5  1  2
+##   Orange Juice   10 10 10
+##   Ascorbic Acid  10 10 10
+</code></pre>
+
+<p>We can see that in the data set there are two supplements, OJ and VC, and three dose levels - i.e. 0.5, 1, 2.</p>
+
+<pre><code class="r">hist &lt;- hist(ToothGrowth$len, breaks = 20, col = &quot;green&quot;, xlab = &quot;Tooth growth&quot;, main = &quot;Histogram of tooth growth&quot;)
+xfit &lt;- seq(min(ToothGrowth$len), max(ToothGrowth$len), length = 40)
+yfit &lt;- dnorm(xfit, mean = mean (ToothGrowth$len), sd = sd(ToothGrowth$len))
+yfit &lt;- yfit*diff(hist$mids[1:2]*length(ToothGrowth$len))
+lines(xfit, yfit, col = &quot;blue&quot;, lwd = 2)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAApVBMVEX9/v0AAAAAADkAAGUAAP8AOTkAOWUAOY8AZo8AZrUA/wA5AAA5ADk5AGU5OWU5OY85ZmU5ZrU5j7U5j9plAABlADllAGVlOQBlOTllZgBlZjllZmVlj49ltbVltf2POQCPOTmPOWWPjzmPj2WPtY+P29qP2/21ZgC1Zjm1tWW124+1/rW1/v3ajzna24/a/rXa/tra/v39tWX924/9/rX9/tr9/v3JhVfmAAAAN3RSTlP///////////////////////////////////////////////////////////////////////8AEFmdiwAAAAlwSFlzAAALEgAACxIB0t1+/AAAFPNJREFUeJzt3Wtj27YVBuDSVps6apZ1UtKt2+x07ayttddaF/7/nzaCF4kUARAHOCABnff9EDumgEPiMSlKJqGvSkRkvlp6BZBlAnihAbzQAF5oAC80gBcawAsN4IUG8EIDeKEBvNAAXmgALzSAFxrACw3ghQbwQgN4oQG80ABeaAAvNIAXGsALDeCFBvBCkxn8cXv/Upanp/uX5rsuu8eATg/r4u7Z1k31Y1WS1qtXo/mSLfzgx7siBP7c2tCN+jHZ0KvRjMkWvv6u2leL+5fTU1EUD2X5Wn3ZlGpxcf/b9t3b6enux2pf3lc/rvboffFt9fOX6kGdbvP4uvW7t7K87qa//KEq+eu66ByvKpwfWS1/rb45br/5YdworWQNf9wWCu2PRmyn/lN9raW+XisWtfT35kFv+6JLK9E+/hq+62awvPm3/nFZXld465q8Vr9Tu+rrvvjLuFFiyQ6+s1Pwh7UCK5vj6mFd7XrH7d3zYV3veDXLQ9fs/mVfqAbFo3qI+tn58cNDfa+b/vKqr03Z1buq0GuyOW7/Xh1VdI0SS9bw9f/U/qtGeV8rVztd/c2xORA/d40U/EP9C9D99Pz4Ifywm/PyupXq9Nz0UuH8yOP24fDdL98976p1GjVKLNnBj57ji3b3MsHXjznDX34dqPBVuSn4cnf/3+q5/5/bh3LcKLHkDa+ya2l0h3rF8lofbsfw1EN9z/CqwuWR+7sfq2f8P68fAc+cIXy3M6vzMO3JXbM/6vf4/lncGV5zctf8eGB4VeHyyOpJZVP9RjTPPleNEkvW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" alt="plot of chunk unnamed-chunk-6"/> </p>
+
+<p>The above notationa are confirmed by the histogram which shows different underlying distributions and large variation, suggesting multiple factors influencing the data. </p>
+
+<h3>C - Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose. (Use the techniques from class even if there’s other approaches worth considering)</h3>
+
+<h4>Performing the t-test by supplement type</h4>
+
+<p>In this test we analyze the impact of supplement type, Orange Juice and Vitamin C, on tooth growth. </p>
+
+<pre><code class="r">t.test(len ~ supp, data = ToothGrowth)
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by supp
+## t = 1.9153, df = 55.309, p-value = 0.06063
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.1710156  7.5710156
+## sample estimates:
+##  mean in group Orange Juice mean in group Ascorbic Acid 
+##                    20.66333                    16.96333
+</code></pre>
+
+<p>The p-values is larger than 5 percent and the confidence intervals of the tests contain 0. Therefore, we fail to reject the null hypothesis and cannot conclude that there is a statistically significant difference in mean tooth growth between OJ and VC groups at the 95 percent confidence level.       </p>
+
+<h4>Subsequently, we look in more detail at how the different dosage levels and supplement type influence tooth growth.</h4>
+
+<pre><code class="r">t.test(len ~ supp, data = ToothGrowth[ToothGrowth$dose==0.5,])
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by supp
+## t = 3.1697, df = 14.969, p-value = 0.006359
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  1.719057 8.780943
+## sample estimates:
+##  mean in group Orange Juice mean in group Ascorbic Acid 
+##                       13.23                        7.98
+</code></pre>
+
+<pre><code class="r">t.test(len ~ supp, data = ToothGrowth[ToothGrowth$dose==1,])
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by supp
+## t = 4.0328, df = 15.358, p-value = 0.001038
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  2.802148 9.057852
+## sample estimates:
+##  mean in group Orange Juice mean in group Ascorbic Acid 
+##                       22.70                       16.77
+</code></pre>
+
+<pre><code class="r">t.test(len ~ supp, data = ToothGrowth[ToothGrowth$dose==2,])
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by supp
+## t = -0.0461, df = 14.04, p-value = 0.9639
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -3.79807  3.63807
+## sample estimates:
+##  mean in group Orange Juice mean in group Ascorbic Acid 
+##                       26.06                       26.14
+</code></pre>
+
+<p>From the above results we fail to reject the null hypothesis that there is not a statistically significant difference in mean tooth growth (i.e. means are equal) between OJ and VC groups at the 95 percent confidence level only for the 2mg dose level. </p>
+
+<h4>Performing the t-test for the different dose levels</h4>
+
+<pre><code class="r"># Subsetting the dose level groups
+dose05_1 &lt;- subset(ToothGrowth, dose %in% c(0.5, 1))
+
+dose05_2 &lt;- subset(ToothGrowth, dose %in% c(0.5, 2))
+
+dose1_2 &lt;- subset(ToothGrowth, dose %in% c(1, 2))
+</code></pre>
+
+<h4>Comparing dose level 0.5mg to 1 mg.</h4>
+
+<pre><code class="r">t.test(len ~ dose, data = dose05_1)
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by dose
+## t = -6.4766, df = 37.986, p-value = 1.268e-07
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -11.983781  -6.276219
+## sample estimates:
+## mean in group 0.5   mean in group 1 
+##            10.605            19.735
+</code></pre>
+
+<h4>Comparing dose level 0.5mg to 2 mg.</h4>
+
+<pre><code class="r">t.test(len ~ dose, data = dose05_2)
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by dose
+## t = -11.799, df = 36.883, p-value = 4.398e-14
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -18.15617 -12.83383
+## sample estimates:
+## mean in group 0.5   mean in group 2 
+##            10.605            26.100
+</code></pre>
+
+<h4>Comparing dose level 1mg to 2 mg.</h4>
+
+<pre><code class="r">t.test(len ~ dose, data = dose1_2)
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  len by dose
+## t = -4.9005, df = 37.101, p-value = 1.906e-05
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -8.996481 -3.733519
+## sample estimates:
+## mean in group 1 mean in group 2 
+##          19.735          26.100
+</code></pre>
+
+<p>When comparing tooth growth to different dose levels we reject the null hypothesis that there is no difference in the in mean (ie.e means are equal), within a 95 percent confidence interval, for all dose levels since the p-values are all very low and the confidence intervals do not contain zero.
+Therefore, there is statistical significance at the 95% confidence level that the dose level has an influence on tooth growth.</p>
+
+<h3>4 - State your conclusions and the assumptions needed for your conclusions.</h3>
+
+<p>Based on the analysis above, we have observed that: </p>
+
+<p>1 - When observing only the supplement method, orange juice and vitamin C, there is not a statistically significant difference in tooth growth at the 95% confidence level.</p>
+
+<p>2 - When we look at the supplement method and dose level, we fail to reject the null hypothesis that there is a statistically significant difference in mean tooth growth between OJ and VC groups at the 95 percent confidence level only for the 2mg dose level.</p>
+
+<p>3 - When comparing tooth growth to different dose levels we reject the null hypothesis that there is no difference in the in mean, within a 95 percent confidence interval, for all dose levels.
+Therefore, there is statistical significance at the 95% confidence level that the dose level has an influence on tooth growth.</p>
+
+</body>
+
+</html>
+

@@ -1,0 +1,150 @@
+---
+title: "Statistical Inference Assigment 2"
+output: pdf_document
+---
+## Statistical Inference Assigment 2
+
+This is a basic statistical inference data analysis. In this report, we are going to analyze the ToothGrowth data in the R datasets package.
+
+### 1 - Loading the required packages and ToothGrowth data
+
+```{r}
+library(ggplot2)
+library(datasets)
+library(knitr)
+library(grid)
+library(gridExtra)
+data(ToothGrowth)
+str(ToothGrowth)
+levels(ToothGrowth$supp) <- c("Orange Juice", "Ascorbic Acid")
+head(ToothGrowth)
+```
+
+### 1.1 - Performing some basic exploratory data analysis
+
+```{r}
+method_plot <- ggplot(aes(x = supp, y = len), data = ToothGrowth) + geom_boxplot(aes(fill = supp)) + 
+                    scale_x_discrete("Supplement method") +   
+                    scale_y_continuous("Teeth length") +  
+                    ggtitle("Tooth Growth Analysis")
+
+method_plot
+```
+
+This chart shows that OJ achieves an higher median tooth length overall compared to ascorbic acid. In addition the value of Q1 for OJ is almost as much as Q2 of ascorbic acid and OJ median is the same as the third quartile of the other administration method. Finally, when looking at the confidence intervals, OJ shows narrower upper and lower intervals.
+
+
+```{r}
+dose_plot <- ggplot(ToothGrowth,
+                aes(x = factor(dose), y = len, fill = factor(dose)))
+
+dose_plot + geom_boxplot(notch = F) + facet_grid(.~supp) +
+                scale_x_discrete("Dosage (mg)") +
+                scale_y_continuous("Tooth lenght") +
+                ggtitle("Tooth Growth Analysis")
+
+```
+
+These charts show that an increasing dosage of both orange juice and ascorbic acid delivery method is conductive to tooth growth in guinea pigs.
+Nonetheless, exploring the different dosage level in more details we observe a different impact of the delivery method on tooth growth. 
+
+At the 0.5 mg dosage level OJ achieves a better growth as we can see from the lowest CI above the median of the other method.
+This is also the case for the 1mg dose level. Although, the OJ delivery shows a wide lower CI the median is much higher than that of the ascorbic acid.  
+
+Finally, at the 2mg dose level, we observe that the tooth growht pattern has not continued - i.e. both OJ and ascorbic acid have similar values - although the VC has mich wider IQRs and confidence intervals than OJ.
+
+
+### B - Analyzing the data further providing a basic summary of the data.
+
+
+```{r}
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+summary(ToothGrowth)
+
+```
+The tooth length ranges from a minimum of `r min(ToothGrowth$len)` to a maximum of `r max(ToothGrowth$len)` with a mean value of `r median(ToothGrowth$len)`.
+
+```{r}
+table(ToothGrowth$supp, ToothGrowth$dose)
+
+```
+We can see that in the data set there are two supplements, OJ and VC, and three dose levels - i.e. 0.5, 1, 2.
+
+```{r}
+hist <- hist(ToothGrowth$len, breaks = 20, col = "green", xlab = "Tooth growth", main = "Histogram of tooth growth")
+xfit <- seq(min(ToothGrowth$len), max(ToothGrowth$len), length = 40)
+yfit <- dnorm(xfit, mean = mean (ToothGrowth$len), sd = sd(ToothGrowth$len))
+yfit <- yfit*diff(hist$mids[1:2]*length(ToothGrowth$len))
+lines(xfit, yfit, col = "blue", lwd = 2)
+```
+
+The above notationa are confirmed by the histogram which shows different underlying distributions and large variation, suggesting multiple factors influencing the data. 
+
+
+### C - Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose. (Use the techniques from class even if there are other approaches worth considering)
+
+#### Performing the t-test by supplement type
+
+In this test we analyze the impact of supplement type, Orange Juice and Vitamin C, on tooth growth. 
+
+```{r}
+t.test(len ~ supp, data = ToothGrowth)
+```
+The p-values is larger than 5 percent and the confidence intervals of the tests contain 0. Therefore, we fail to reject the null hypothesis and cannot conclude that there is a statistically significant difference in mean tooth growth between OJ and VC groups at the 95 percent confidence level.       
+
+
+#### Subsequently, we look in more detail at how the different dosage levels and supplement type influence tooth growth.  
+
+```{r}
+t.test(len ~ supp, data = ToothGrowth[ToothGrowth$dose==0.5,])
+
+t.test(len ~ supp, data = ToothGrowth[ToothGrowth$dose==1,])
+
+t.test(len ~ supp, data = ToothGrowth[ToothGrowth$dose==2,])
+
+```
+From the above results we fail to reject the null hypothesis that there is not a statistically significant difference in mean tooth growth (i.e. means are equal) between OJ and VC groups at the 95 percent confidence level only for the 2mg dose level. 
+
+
+
+#### Performing the t-test for the different dose levels
+
+```{r}
+# Subsetting the dose level groups
+dose05_1 <- subset(ToothGrowth, dose %in% c(0.5, 1))
+
+dose05_2 <- subset(ToothGrowth, dose %in% c(0.5, 2))
+
+dose1_2 <- subset(ToothGrowth, dose %in% c(1, 2))
+```
+
+#### Comparing dose level 0.5mg to 1 mg.
+```{r}
+t.test(len ~ dose, data = dose05_1)
+```
+
+#### Comparing dose level 0.5mg to 2 mg.
+```{r}
+t.test(len ~ dose, data = dose05_2)
+```
+
+#### Comparing dose level 1mg to 2 mg.
+```{r}
+t.test(len ~ dose, data = dose1_2)
+```
+
+When comparing tooth growth to different dose levels we reject the null hypothesis that there is no difference in the in mean (ie.e means are equal), within a 95 percent confidence interval, for all dose levels since the p-values are all very low and the confidence intervals do not contain zero.
+Therefore, there is statistical significance at the 95% confidence level that the dose level has an influence on tooth growth.
+
+
+
+### 4 - State your conclusions and the assumptions needed for your conclusions.
+
+Based on the analysis above, we have observed that: 
+
+1 - When observing only the supplement method, orange juice and vitamin C, there is not a statistically significant difference in tooth growth at the 95% confidence level.
+
+2 - When we look at the supplement method and dose level, we fail to reject the null hypothesis that there is a statistically significant difference in mean tooth growth between OJ and VC groups at the 95 percent confidence level only for the 2mg dose level.
+
+3 - When comparing tooth growth to different dose levels we reject the null hypothesis that there is no difference in the in mean, within a 95 percent confidence interval, for all dose levels.
+Therefore, there is statistical significance at the 95% confidence level that the dose level has an influence on tooth growth.
